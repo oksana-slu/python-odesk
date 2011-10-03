@@ -173,7 +173,7 @@ class Client(BaseClient):
             self.hr = HR(self)
 
         if mc:
-            from odesk.routers.mc import *
+            from odesk.routers.mc import MC
             self.mc = MC(self)
 
         if oconomy:

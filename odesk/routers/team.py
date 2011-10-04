@@ -32,7 +32,10 @@ class Team(Namespace):
         """
         url = 'teamrooms'
         result = self.get(url)
-        teamrooms = result['teamrooms']['teamroom']
+        if 'teamrooms' in result and 'teamroom' in result['teamrooms']:
+            teamrooms = result['teamrooms']['teamroom']
+        else:
+            teamrooms = []
         if not isinstance(teamrooms, list):
             teamrooms = [teamrooms]
         return teamrooms
@@ -49,7 +52,10 @@ class Team(Namespace):
         """
         url = 'snapshots/%s' % team_id
         result = self.get(url, {'online': online})
-        snapshots = result['teamroom']['snapshot']
+        if 'teamroom' in result and 'snapshot' in result['teamroom']:
+            snapshots = result['teamroom']['snapshot']
+        else:
+            snapshots = []
         if not isinstance(snapshots, list):
             snapshots = [snapshots]
         return snapshots
@@ -72,7 +78,10 @@ class Team(Namespace):
         if datetime:   # date could be a list or a range also
             url += '/%s' % datetime.isoformat()
         result = self.get(url)
-        snapshot = result['snapshot']
+        if 'snapshot' in result:
+            snapshot = result['snapshot']
+        else:
+            snapshot = []
         return snapshot
 
     def update_snapshot(self, company_id, user_id, datetime=None,
@@ -142,7 +151,10 @@ class Team(Namespace):
         url = 'teamrooms'
         self.version = 2
         result = self.get(url)
-        teamrooms = result['teamrooms']['teamroom']
+        if 'teamrooms' in result and 'teamroom' in result['teamrooms']:
+            teamrooms = result['teamrooms']['teamroom']
+        else:
+            teamrooms = []
         if not isinstance(teamrooms, list):
             teamrooms = [teamrooms]
         self.version = 1
@@ -161,7 +173,10 @@ class Team(Namespace):
         url = 'teamrooms/%s' % team_id
         self.version = 2
         result = self.get(url, {'online': online})
-        snapshots = result['teamroom']['snapshot']
+        if 'teamroom' in result and 'snapshot' in result['teamroom']:
+            snapshots = result['teamroom']['snapshot']
+        else:
+            snapshots = []
         if not isinstance(snapshots, list):
             snapshots = [snapshots]
         self.version = 1
